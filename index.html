@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SR Jewels &mdash; Fine Jewellery, Cast in Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12201c;
+    --ivory:#f4f1e8;
+    --moss:#26463c;
+    --moss-deep:#16281f;
+    --gold:#b98d4a;
+    --gold-soft:#d9bb84;
+    --line: rgba(244,241,232,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Sora', sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* Nav */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px;
+    mix-blend-mode:difference;
+    color:#fff;
+  }
+  .brand{font-family:'Fraunces', serif; font-size:20px; font-weight:500; letter-spacing:0.02em;}
+  .navlinks{display:flex; gap:34px; font-size:14px;}
+  .navlinks a{text-decoration:none; opacity:0.85; transition:opacity .2s;}
+  .navlinks a:hover{opacity:1;}
+  .nav-cta{border:1px solid currentColor; padding:8px 18px; border-radius:999px; font-size:13px; text-decoration:none;}
+
+  /* Hero */
+  .hero{
+    min-height:100vh;
+    background:var(--moss);
+    color:var(--ivory);
+    display:flex; flex-direction:column; justify-content:flex-end;
+    position:relative;
+    overflow:hidden;
+    padding-bottom:70px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 18%, rgba(217,187,132,0.22), transparent 60%),
+      radial-gradient(ellipse 40% 40% at 15% 85%, rgba(217,187,132,0.10), transparent 60%);
+  }
+  .hero-ring{
+    position:absolute; right:6%; top:14%;
+    width:min(46vw, 520px); height:min(46vw, 520px);
+    opacity:0.9;
+  }
+  .hero-top{
+    position:relative; z-index:2;
+    padding-top:140px;
+  }
+  .eyebrow-free{
+    font-size:14px; color:var(--gold-soft); font-style:italic; font-family:'Fraunces', serif;
+  }
+  .hero h1{
+    font-size:clamp(48px, 8vw, 108px);
+    line-height:0.98;
+    max-width:16ch;
+    margin-top:14px;
+  }
+  .hero-sub{
+    position:relative; z-index:2;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:40px; margin-top:56px; flex-wrap:wrap;
+  }
+  .hero-sub p{max-width:38ch; font-size:16px; color:rgba(244,241,232,0.78);}
+  .hero-cta{
+    display:inline-flex; align-items:center; gap:12px;
+    background:var(--gold); color:var(--moss-deep);
+    padding:16px 28px; border-radius:999px;
+    font-size:15px; font-weight:600; text-decoration:none;
+    white-space:nowrap;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .hero-cta:hover{transform:translateY(-2px); background:var(--gold-soft);}
+
+  /* Marquee strip */
+  .strip{
+    background:var(--ink); color:var(--ivory);
+    padding:14px 0; overflow:hidden; white-space:nowrap;
+    font-family:'Fraunces', serif; font-style:italic; font-size:15px;
+  }
+  .strip span{padding:0 26px; opacity:0.75;}
+
+  /* Section headers */
+  .section{padding:120px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:56px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(30px,4vw,46px); max-width:14ch;}
+  .section-head p{max-width:32ch; font-size:15px; color:#5b6a63;}
+
+  /* Collections */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:2px;
+    background:var(--line-light, #e4dfd0);
+  }
+  .piece{
+    background:var(--ivory);
+    padding:44px 30px;
+    position:relative;
+    min-height:340px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    transition:background .3s ease;
+  }
+  .piece:hover{background:#ece7d8;}
+  .piece .mark{width:64px; height:64px; color:var(--moss);}
+  .piece h3{font-size:22px; margin-top:26px;}
+  .piece .meta{display:flex; justify-content:space-between; align-items:baseline; margin-top:10px; font-size:14px; color:#6b7a72;}
+  .piece .price{font-family:'Fraunces', serif; font-style:italic; color:var(--gold);}
+
+  /* Craft section */
+  .craft{background:var(--moss-deep); color:var(--ivory);}
+  .craft-grid{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:80px; align-items:center;
+  }
+  .craft-grid h2{font-size:clamp(30px,4vw,44px); max-width:12ch; color:var(--ivory);}
+  .steps{display:flex; flex-direction:column; gap:0;}
+  .step{
+    display:grid; grid-template-columns:60px 1fr; gap:22px;
+    padding:26px 0; border-top:1px solid var(--line);
+  }
+  .step:last-child{border-bottom:1px solid var(--line);}
+  .step .num{font-family:'Fraunces', serif; font-style:italic; color:var(--gold-soft); font-size:18px;}
+  .step h4{font-size:17px; font-weight:500; margin-bottom:6px; font-family:'Sora',sans-serif;}
+  .step p{font-size:14px; color:rgba(244,241,232,0.7); max-width:44ch;}
+
+  /* Testimonial */
+  .quote-sec{padding:130px 0; text-align:center;}
+  .quote-sec blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:400;
+    font-size:clamp(24px,3.4vw,38px);
+    max-width:20ch; margin:0 auto; line-height:1.35;
+    color:var(--ink);
+  }
+  .quote-sec cite{
+    display:block; margin-top:26px; font-style:normal; font-size:14px; color:#6b7a72;
+  }
+
+  /* Newsletter / footer */
+  footer{background:var(--ink); color:var(--ivory); padding:90px 0 40px;}
+  .foot-top{
+    display:flex; justify-content:space-between; gap:60px; flex-wrap:wrap;
+    padding-bottom:60px; border-bottom:1px solid var(--line);
+  }
+  .foot-top h2{font-size:clamp(28px,4vw,42px); max-width:11ch;}
+  .signup{display:flex; gap:0; max-width:380px; margin-top:26px;}
+  .signup input{
+    flex:1; background:transparent; border:1px solid var(--line); border-right:none;
+    padding:14px 16px; color:var(--ivory); font-family:'Sora',sans-serif; font-size:14px;
+    border-radius:999px 0 0 999px; outline:none;
+  }
+  .signup input::placeholder{color:rgba(244,241,232,0.5);}
+  .signup button{
+    background:var(--gold); border:none; color:var(--moss-deep); font-weight:600;
+    padding:0 22px; border-radius:0 999px 999px 0; cursor:pointer; font-size:14px;
+  }
+  .foot-cols{display:flex; gap:80px; flex-wrap:wrap;}
+  .foot-col h5{font-size:13px; text-transform:none; color:var(--gold-soft); margin-bottom:14px; font-family:'Fraunces',serif; font-style:italic;}
+  .foot-col a{display:block; font-size:14px; color:rgba(244,241,232,0.75); text-decoration:none; margin-bottom:10px;}
+  .foot-bottom{
+    display:flex; justify-content:space-between; margin-top:60px; font-size:13px; color:rgba(244,241,232,0.5); flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width:860px){
+    .navlinks{display:none;}
+    .grid{grid-template-columns:1fr;}
+    .craft-grid{grid-template-columns:1fr; gap:40px;}
+    .foot-cols{gap:40px;}
+    .hero-ring{opacity:0.5;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">SR Jewels</div>
+  <div class="navlinks">
+    <a href="#collections">Collections</a>
+    <a href="#craft">Craftsmanship</a>
+    <a href="#contact">Visit</a>
+  </div>
+  <a class="nav-cta" href="#collections">Browse pieces</a>
+</nav>
+
+<section class="hero">
+  <svg class="hero-ring" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="230" r="120" stroke="#d9bb84" stroke-width="2" opacity="0.55"/>
+    <circle cx="200" cy="230" r="120" stroke="#d9bb84" stroke-width="10" stroke-dasharray="2 14" opacity="0.4"/>
+    <path d="M200 60 L228 118 L172 118 Z" fill="#d9bb84" opacity="0.85"/>
+    <path d="M170 118 L200 60 L172 118 L140 132 Z" fill="#f4f1e8" opacity="0.35"/>
+    <path d="M230 118 L200 60 L228 118 L260 132 Z" fill="#f4f1e8" opacity="0.25"/>
+  </svg>
+  <div class="wrap hero-top">
+    <div class="eyebrow-free">Established in Antwerp, worn everywhere</div>
+    <h1>Jewellery built around a single stone's honesty.</h1>
+  </div>
+  <div class="wrap hero-sub">
+    <p>Each piece begins with one gem chosen for its particular character, then set by hand in recycled gold. Nothing is plated. Nothing is rushed.</p>
+    <a class="hero-cta" href="#collections">See the current edit</a>
+  </div>
+</section>
+
+<div class="strip">
+  <span>Recycled 18k gold</span>
+  <span>Traceable stones</span>
+  <span>Hand-finished in small batches</span>
+  <span>Lifetime resizing</span>
+  <span>Recycled 18k gold</span>
+  <span>Traceable stones</span>
+  <span>Hand-finished in small batches</span>
+  <span>Lifetime resizing</span>
+</div>
+
+<section class="section" id="collections">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Four ways to wear one idea</h2>
+      <p>Every collection shares the same setting language &mdash; only the stone and the story change.</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="piece">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+        <circle cx="32" cy="24" r="14"/>
+        <path d="M20 24 Q32 40 44 24" stroke-dasharray="1 4"/>
+        <path d="M32 38 V54"/>
+      </svg>
+      <div>
+        <h3>The Meridian</h3>
+        <p style="font-size:14px; color:#5b6a63; margin-top:8px;">A single lab-grown sapphire, set low so it catches light from the side, not above.</p>
+      </div>
+      <div class="meta"><span>Pendant, 18k gold</span><span class="price">$640</span></div>
+    </div>
+
+    <div class="piece">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+        <ellipse cx="32" cy="32" rx="22" ry="10"/>
+        <ellipse cx="32" cy="32" rx="14" ry="20"/>
+      </svg>
+      <div>
+        <h3>The Low Tide</h3>
+        <p style="font-size:14px; color:#5b6a63; margin-top:8px;">A wide band carved with a soft, sanded ridge, worn alone or stacked three deep.</p>
+      </div>
+      <div class="meta"><span>Ring, 18k gold</span><span class="price">$480</span></div>
+    </div>
+
+    <div class="piece">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M12 20 Q32 44 52 20"/>
+        <circle cx="32" cy="40" r="4" fill="currentColor" stroke="none"/>
+      </svg>
+      <div>
+        <h3>The Undertow</h3>
+        <p style="font-size:14px; color:#5b6a63; margin-top:8px;">A short chain that sits at the collarbone with a single teardrop opal.</p>
+      </div>
+      <div class="meta"><span>Necklace, 18k gold</span><span class="price">$820</span></div>
+    </div>
+
+    <div class="piece">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M20 44 V26 Q20 16 32 16 Q44 16 44 26 V44"/>
+        <circle cx="20" cy="46" r="3" fill="currentColor" stroke="none"/>
+        <circle cx="44" cy="46" r="3" fill="currentColor" stroke="none"/>
+      </svg>
+      <div>
+        <h3>The Hairline</h3>
+        <p style="font-size:14px; color:#5b6a63; margin-top:8px;">Thread-thin hoops with a hidden hinge, made to be worn and forgotten.</p>
+      </div>
+      <div class="meta"><span>Earrings, 18k gold</span><span class="price">$390</span></div>
+    </div>
+
+    <div class="piece">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+        <rect x="18" y="18" width="28" height="28" rx="2" transform="rotate(45 32 32)"/>
+      </svg>
+      <div>
+        <h3>The Fault Line</h3>
+        <p style="font-size:14px; color:#5b6a63; margin-top:8px;">A raw-edged tourmaline set flush into a flat gold panel, worn as a signet.</p>
+      </div>
+      <div class="meta"><span>Ring, 18k gold</span><span class="price">$710</span></div>
+    </div>
+
+    <div class="piece">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M16 32 H48 M24 24 H40 M28 40 H36"/>
+      </svg>
+      <div>
+        <h3>The Ladder</h3>
+        <p style="font-size:14px; color:#5b6a63; margin-top:8px;">Graduated bar studs, sold as a set of three, for building your own ear edit.</p>
+      </div>
+      <div class="meta"><span>Earrings, 18k gold</span><span class="price">$450</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section craft" id="craft">
+  <div class="wrap craft-grid">
+    <h2>From rough stone to finished piece, in five stages</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div><h4>Sourcing</h4><p>Every stone is bought directly from small-scale cutters we've worked with for years, with full chain of custody.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div><h4>Sketching</h4><p>The setting is drawn around that specific stone's shape, not adapted from a stock template.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div><h4>Casting</h4><p>Recycled 18k gold is cast in small batches of under twenty pieces at a time.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <div><h4>Setting</h4><p>Our bench jeweller sets each stone by hand, checking the angle of light before it's ever polished.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">05</div>
+        <div><h4>Finishing</h4><p>A final hand-polish and inspection, then it's packed and ready to travel to you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-sec">
+  <div class="wrap">
+    <blockquote>"It doesn't look like it was designed for everyone. It looks like it was designed for the stone."</blockquote>
+    <cite>&mdash; Nadia R., wearing the Meridian pendant</cite>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-top">
+      <h2>Get first look at new editions</h2>
+      <div>
+        <div class="signup">
+          <input type="email" placeholder="your email address">
+          <button type="button">Join</button>
+        </div>
+      </div>
+    </div>
+    <div class="foot-cols" style="margin-top:50px;">
+      <div class="foot-col">
+        <h5>Visit</h5>
+        <a href="#">Antwerp atelier, by appointment</a>
+        <a href="#">Book a fitting</a>
+      </div>
+      <div class="foot-col">
+        <h5>Care</h5>
+        <a href="#">Sizing &amp; resizing</a>
+        <a href="#">Cleaning guide</a>
+        <a href="#">Repairs</a>
+      </div>
+      <div class="foot-col">
+        <h5>Follow</h5>
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 SR Jewels</span>
+      <span>Recycled gold &middot; Traceable stones &middot; Made in Antwerp</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
